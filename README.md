@@ -6,11 +6,11 @@ This is a small monorepo of microservices that look to help keep track of points
 
 ### Services:
 
-- points service: port 8500
-- user service: port 8501
-- payer service: port 8502
-- swagger-ui: port 8503
-- nats: ports 4222 6222 8222
+- points service: `port 8500`
+- user service: `port 8501`
+- payer service: `port 8502`
+- swagger-ui: `port 8503`
+- nats: ports `4222 6222 8222`
 
 These three services work together to support commands against the points service.  They communicate to one another through Nats Jetstream.
 
