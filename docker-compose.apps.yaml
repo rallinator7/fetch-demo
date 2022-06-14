@@ -1,0 +1,41 @@
+version: "3.3"
+services:
+  payer:
+    image: "payer-service:latest"
+    container_name: "payer-service"
+    ports:
+      - 8500:8500
+    environment:
+      PORT: 8500
+      PUBSUB_SERVER: "nats://nats-server:4222"
+      PAYER_STREAM: "PAYER"
+    networks:
+      - fetch-demo
+  points:
+    image: "points-service:latest"
+    container_name: "points-service"
+    ports:
+      - 8501:8501
+    environment:
+      PORT: 8501
+      PUBSUB_SERVER: "nats://nats-server:4222"
+      PAYER_STREAM: "PAYER"
+      PAYER_QUEUE: "points-payer-queue"
+      USER_STREAM: "USER"
+      USER_QUEUE: "points-user-queue"
+    networks:
+      - fetch-demo
+  user:
+    image: "user-service:latest"
+    container_name: "user-service"
+    ports:
+      - 8502:8502
+    environment:
+      PORT: 8502
+      PUBSUB_SERVER: "nats://nats-server:4222"
+      USER_STREAM: "USER"
+    networks:
+      - fetch-demo
+networks:
+  fetch-demo:
+    name: fetch_demo

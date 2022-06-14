@@ -1,0 +1,66 @@
+{
+	"info": {
+		"_postman_id": "3a51f5f4-fef0-406f-a361-d46480368b85",
+		"name": "fetch_demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18367530"
+	},
+	"item": [
+		{
+			"name": "addPayer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\" : \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8500/payer/add",
+					"host": [
+						"localhost"
+					],
+					"port": "8500",
+					"path": [
+						"payer",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"firstName\" : \"\",\n    \"lastName\" : \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8502/user/add",
+					"host": [
+						"localhost"
+					],
+					"port": "8502",
+					"path": [
+						"user",
+						"add"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,226 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Point Service",
+    "description": "A sample API that manages a users payer points",
+    "contact": {
+      "name": "Simon Rall",
+      "email": "rallinator7@gmail.com"
+    }
+  },
+  "paths": {
+    "/points/{user}": {
+      "get": {
+        "summary": "Returns a users balance of points based on the payer that added them",
+        "operationId": "DescribeBalance",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "the user id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "list balance response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BalanceList"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/points/spend/{user}": {
+      "post": {
+        "summary": "Spends a users points",
+        "operationId": "spendPoints",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "the user id"
+          }
+        ],
+        "requestBody": {
+          "description": "spend points command",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SpendPoints"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "spend points response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PayerPoints"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/points/give/{user}": {
+      "post": {
+        "summary": "Gives a user points from a payer",
+        "operationId": "givePoints",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "the user id"
+          }
+        ],
+        "requestBody": {
+          "description": "Give points command",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GivePoints"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "total payer points",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PayerPoints"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PayerPoints": {
+        "required": [
+          "payer",
+          "points"
+        ],
+        "properties": {
+          "payer": {
+            "type": "string",
+            "description": "payer name"
+          },
+          "points": {
+            "type": "integer",
+            "description": "point total"
+          }
+        }
+      },
+      "SpendPoints": {
+        "required": [
+          "points"
+        ],
+        "properties": {
+          "points": {
+            "type": "integer",
+            "description": "points spent"
+          }
+        }
+      },
+      "GivePoints": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PayerPoints"
+          },
+          {
+            "required": [
+              "timestamp"
+            ],
+            "properties": {
+              "timestamp": {
+                "type": "string",
+                "description": "timestamp"
+              }
+            }
+          }
+        ]
+      },
+      "BalanceList": {
+        "additionalProperties": {
+          "type": "integer"
+        }
+      },
+      "Error": {
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "error message"
+          }
+        }
+      }
+    }
+  }
+}

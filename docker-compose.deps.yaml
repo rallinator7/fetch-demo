@@ -1,0 +1,28 @@
+version: "3.3"
+services:
+  nats:
+    image: nats:latest
+    container_name: "nats-server"
+    ports:
+      - 4222:4222
+      - 8222:8222
+      - 6222:6222
+    command: -js
+    networks:
+      - fetch-demo
+  swagger-ui:
+    ports:
+      - 8503:8080
+    image: swaggerapi/swagger-ui
+    restart: always
+    volumes:
+      - ./cmd/payer/openapi.json:/usr/share/nginx/html/api/payer.json
+      - ./cmd/points/openapi.json:/usr/share/nginx/html/api/points.json
+      - ./cmd/user/openapi.json:/usr/share/nginx/html/api/user.json
+    environment:
+      URLS: "[{ url: \"./api/payer.json\", name: \"PayerService\" }, { url: \"./api/points.json\", name: \"PointService\" }, { url: \"./api/user.json\", name: \"UserService\" },]"
+    networks:
+      - fetch-demo
+networks:
+  fetch-demo:
+    name: fetch_demo

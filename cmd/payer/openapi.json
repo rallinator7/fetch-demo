@@ -1,0 +1,106 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Payer Service",
+    "description": "A sample API that manages payers",
+    "contact": {
+      "name": "Simon Rall",
+      "email": "rallinator7@gmail.com"
+    }
+  },
+  "paths": {
+    "/payer/add": {
+      "post": {
+        "summary": "Adds a payer",
+        "operationId": "addPayer",
+        "requestBody": {
+          "description": "payer to add",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PayerName"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "add payer response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Payer"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "PayerName": {
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "payer name"
+          }
+        }
+      },
+      "Payer": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/PayerName"
+          },
+          {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "payer id"
+              }
+            }
+          }
+        ]
+      },
+      "Error": {
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "description": "error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "error message"
+          }
+        }
+      }
+    }
+  }
+}

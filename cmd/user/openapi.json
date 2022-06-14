@@ -1,0 +1,111 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "User Service",
+    "description": "A sample API that manages users",
+    "contact": {
+      "name": "Simon Rall",
+      "email": "rallinator7@gmail.com"
+    }
+  },
+  "paths": {
+    "/user/add": {
+      "post": {
+        "summary": "Adds a user",
+        "operationId": "addUser",
+        "requestBody": {
+          "description": "user to add",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserName"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "add user response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserName": {
+        "required": [
+          "firstName",
+          "lastName"
+        ],
+        "properties": {
+          "lastName": {
+            "type": "string",
+            "description": "payer name"
+          },
+          "firstName": {
+            "type": "string",
+            "description": "payer name"
+          }
+        }
+      },
+      "User": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/UserName"
+          },
+          {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "user id"
+              }
+            }
+          }
+        ]
+      },
+      "Error": {
+        "required": [
+          "code",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int64",
+            "description": "error code"
+          },
+          "message": {
+            "type": "string",
+            "description": "error message"
+          }
+        }
+      }
+    }
+  }
+}
