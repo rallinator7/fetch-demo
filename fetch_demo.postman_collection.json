@@ -61,6 +61,83 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "givePoints",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"payer\" : \"\",\n    \"points\" : 0,\n    \"timestamp\" : \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8501/points/give/{user-id}",
+					"host": [
+						"localhost"
+					],
+					"port": "8501",
+					"path": [
+						"points",
+						"give",
+						"{user-id}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "spendPoints",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"points\" : 5000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8501/points/spend/{user-id}",
+					"host": [
+						"localhost"
+					],
+					"port": "8501",
+					"path": [
+						"points",
+						"spend",
+						"{user-id}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "listPoints",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8501/points/{user-id}",
+					"host": [
+						"localhost"
+					],
+					"port": "8501",
+					"path": [
+						"points",
+						"{user-id}"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
